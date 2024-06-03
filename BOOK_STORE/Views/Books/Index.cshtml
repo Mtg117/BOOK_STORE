@@ -1,0 +1,60 @@
+﻿@using BOOK_STORE.ViewModel
+@model List<BookVM>
+
+@section Title {
+Books
+}
+@section SubTitle {
+	show
+}
+@section Buttons {
+	<a asp-controller="Books" asp-action="Create" class="btn btn-primary">Create</a>
+}
+@if (!Model.Any())
+{
+    <div class="card-body">
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-exclamation-triangle"></i> Alert!</h5>
+            No data found
+        </div>
+    </div>
+}
+else
+{
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Publisher</th>
+                    <th>Publish Date</th>
+                    <th>Image</th>
+                    <th style="width:250px">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in @Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Title</td>
+                        <td>@item.Author</td>
+                        <td>@item.Publisher</td>
+                        <td>@item.publishDate</td>
+                        <td><img src="~/img/books/@item.ImageUrl" width="50px"/></td>
+                        <td>@string.Join(" , ",item.Catrgories)</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" asp-controller="Categories" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i> Edit</a>
+                            <a class="btn btn-sm btn-success  " asp-controller="Categories" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i> Details</a>
+                            <a class="btn btn-sm btn-danger js-delete" asp-controller="Books" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i> Delete</a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
